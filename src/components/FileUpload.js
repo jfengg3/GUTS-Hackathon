@@ -17,15 +17,25 @@ const UploadFiles = () => {
   }, []);
 
   const upload = () => {
+    const audioTypes = ['ogg', 'mp3', '3ga', 'aac',
+                        'ac3', 'aif', 'aiff', 'alac',
+                        'amr', 'ape', 'au', 'dss',
+                        'flac', 'm4a', 'm4b', 'm4p',
+                        'mpga', 'oga', 'mogg','wv',
+                        'opus', 'qcp', 'tta', 'voc', 'wav'];
+
     let currentFile = selectedFiles[0];
 
     //ensure file is audio
     var filename = currentFile["path"];
     var fileExt = filename.split(".");
-
-    if (fileExt[1] !== "ogg") {
-      //alert('Not OGG File');
-      //return false;
+    
+    // Check if file is supported (ONLY SUPPORT AUDIO FILES)
+    if (audioTypes.includes(fileExt[1])) {
+      
+    } else {
+      setMessage("File format is not supported. (Eg. '3ga', 'mp3', 'ogg', 'wav', ...)");
+      return false;
     }
 
     setProgress(0);
@@ -45,7 +55,7 @@ const UploadFiles = () => {
     })
       .then((response) => {
         var fileURL = response.data.message;
-
+        setMessage("Uploaded successfully!")
         return getFiles();
       })
       .then((files) => {
@@ -93,7 +103,7 @@ const UploadFiles = () => {
                   {selectedFiles && selectedFiles[0].name}
                 </div>
               ) : (
-                "Drag and drop file here, or click to select file"
+                "Drag and drop file here, or click to select file (Max: 2mb)"
               )}
             </div>
             <aside className="selected-file-wrapper">
@@ -107,15 +117,15 @@ const UploadFiles = () => {
             </aside>
           </section>
         )}
-      </Dropzone>
-
+      </Dropzone>  
+                
       <div className="alert alert-light" role="alert">
         {message}
       </div>
 
       {fileInfos.length > 0 && (
         <div className="card">
-          <div className="card-header">List of Files</div>
+          <div className="card-header">Audio Database </div>
           <ul className="list-group list-group-flush">
             {fileInfos.map((file, index) => (
               <li className="list-group-item" key={index}>

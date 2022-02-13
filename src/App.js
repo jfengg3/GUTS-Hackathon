@@ -8,11 +8,13 @@ function App() {
   return (
     <div className="container" style={{ width: "600px" }}>
       <div className="my-3">
-        <h3>bezkoder.com</h3>
-        <h4>React Hooks Drag & Drop File Upload</h4>
+        <h3>Storyhub</h3>
+        <h4>A morally decent audio database :)</h4>
+        <h8>Our service will detect the audio files for profanities and remove them from the database if any</h8>
       </div>
 
       <FileUpload />
+
     </div>
   );
 }
